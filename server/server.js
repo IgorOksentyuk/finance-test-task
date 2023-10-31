@@ -47,11 +47,11 @@ function trackTickers(socket) {
   getQuotes(socket);
 
   // every N seconds
-  const timer = setInterval(function() {
+  const timer = setInterval(function () {
     getQuotes(socket);
   }, FETCH_INTERVAL);
 
-  socket.on('disconnect', function() {
+  socket.on('disconnect', function () {
     clearInterval(timer);
   });
 }
@@ -66,7 +66,7 @@ const socketServer = io(server, {
   }
 });
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
