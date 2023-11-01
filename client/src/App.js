@@ -12,6 +12,7 @@ export const App = () => {
   const [updatedTickers, setUpdatedTickers] = useState(new Set());
   const [showTickers, setShowTickers] = useState(true);
   const [hiddenTickers, setHiddenTickers] = useState(new Set());
+  const [interval, setInterval] = useState(5000);
 
   const dispatch = useDispatch();
   const tickerData = useSelector((state) => state.ticker.tickerData);
@@ -60,20 +61,40 @@ export const App = () => {
     setHiddenTickers(new Set(hiddenTickers));
   };
 
+  const updateInterval = (value) => {
+    setInterval(value);
+    socket.emit('updateInterval', value);
+  }
+
   return (
     <div className="wrapper">
       <h1 className="title">Real-time ticker</h1>
 
-      <button
-        className='tickers-toggler'
-        onClick={toggleTickers}>
-        {showTickers ? 'Hide Tickers' : 'Show Tickers'}
-      </button>
+      <div className="panel-container">
+        <button
+          className="tickers-toggler toggler-fs"
+          onClick={toggleTickers}>
+          {showTickers ? 'Hide Tickers' : 'Show Tickers'}
+        </button>
 
-      <div className="tickers">
+        <form className="panel-form">
+          <label>Enter new interval (ms)</label>
+
+          <input
+            className="input"
+            value={interval}
+            step={1000}
+            onChange={(e) => updateInterval(e.target.value)}
+            type="number"
+            placeholder="Enter new interval (ms)"
+          />
+        </form>
+      </div>
+
+      <div className="buttons-container">
         {showTickers && tickerData.map((ticker) => (
           <button
-            className="tickers-toggler"
+            className="tickers-toggler margin-0"
             key={ticker.ticker}
             onClick={() => toggleTicker(ticker.ticker)}
           >

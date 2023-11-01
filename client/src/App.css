@@ -10,10 +10,38 @@
   margin: 0 0 20px;
 }
 
-.tickers {
+.panel-container {
   display: flex;
+  gap: 30px;
+}
+
+.panel-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
   gap: 20px;
+  margin-bottom: 40px;
+}
+
+.input {
+  width: 100px;
+  padding: 6px 10px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.input:focus {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 }
 
 .tickers-toggler {
@@ -25,6 +53,10 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.2s ease-in-out;
   cursor: pointer;
+}
+
+.toggler-fs {
+  font-size: 16px;
 }
 
 .tickers-toggler:hover {
@@ -72,4 +104,8 @@
 
 .ticker-toggler:hover {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.margin-0 {
+  margin-bottom: 0;
 }

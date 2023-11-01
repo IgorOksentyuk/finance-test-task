@@ -4,8 +4,9 @@ const http = require('http');
 const io = require('socket.io');
 const cors = require('cors');
 
-const FETCH_INTERVAL = 5000;
+let FETCH_INTERVAL = 5000;
 const PORT = process.env.PORT || 4000;
+let timer;
 
 const tickers = [
   'AAPL', // Apple
@@ -27,7 +28,6 @@ function utcDate() {
 }
 
 function getQuotes(socket) {
-
   const quotes = tickers.map(ticker => ({
     ticker,
     exchange: 'NASDAQ',
@@ -43,11 +43,9 @@ function getQuotes(socket) {
 }
 
 function trackTickers(socket) {
-  // run the first time immediately
   getQuotes(socket);
 
-  // every N seconds
-  const timer = setInterval(function () {
+  timer = setInterval(function () {
     getQuotes(socket);
   }, FETCH_INTERVAL);
 
@@ -72,6 +70,12 @@ app.get('/', function (req, res) {
 
 socketServer.on('connection', (socket) => {
   socket.on('start', () => {
+    trackTickers(socket);
+  });
+
+  socket.on('updateInterval', (data) => {
+    FETCH_INTERVAL = +data;
+    clearInterval(timer);
     trackTickers(socket);
   });
 });
