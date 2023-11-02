@@ -4,6 +4,7 @@ import { updateTickerData } from './redux/tickerSlice';
 import io from 'socket.io-client';
 
 import { Ticker } from './components/Ticker';
+import { getTickerTime } from './utils/getTickerTime';
 import './App.css';
 
 const socket = io('http://localhost:4000');
@@ -16,17 +17,6 @@ export const App = () => {
 
   const dispatch = useDispatch();
   const tickerData = useSelector((state) => state.ticker.tickerData);
-
-  const getTickerTime = (timestamp) => {
-    const date = new Date(timestamp);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-
-    const formattedDate = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-    return formattedDate;
-  };
 
   useEffect(() => {
     socket.emit('start');
